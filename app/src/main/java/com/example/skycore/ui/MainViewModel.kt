@@ -12,15 +12,14 @@ import retrofit2.Response
 
 class MainViewModel constructor(private val repository: MainRepository) : ViewModel() {
 
-    val restaurantList = MutableLiveData<Data>()
+    val restaurantList = MutableLiveData<List<Restaurant>>()
     val errorMessage = MutableLiveData<String>()
 
     fun getAllRestaurants() {
-        val response = repository.getAllRestaurants()
-        response.enqueue(object : Callback<Data> {
+        repository.getAllRestaurants().enqueue(object : Callback<Data> {
             override fun onResponse(call: Call<Data>, response: Response<Data>) {
-                Log.d("TAG", response.toString())
-              //  restaurantList.postValue(response.body())
+                Log.i("TAG", response.body()?.businesses.toString())
+                restaurantList.postValue(response.body()?.businesses)
             }
 
             override fun onFailure(call: Call<Data>, t: Throwable) {

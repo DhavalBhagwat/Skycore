@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, MainViewModelFactory(MainRepository(retrofitService))).get(MainViewModel::class.java)
         binding.recyclerview.adapter = adapter
         viewModel.restaurantList.observe(this, {
-            Log.d(TAG, "onCreate.restaurantList: $it")
-            //adapter.setRestaurantList(it)
+            adapter.setRestaurantList(it)
         })
         viewModel.errorMessage.observe(this, {
             Log.e(TAG, "onCreate.errorMessage: $it")

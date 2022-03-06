@@ -16,7 +16,6 @@ interface RetrofitService {
 
     @GET("/v3/businesses/search")
     fun getRestaurants(
-        //@Header("Authorization") token: String = "Bearer $API_KEY",
         @Query("term") term: String? = "restaurants",
         @Query("location") location: String? = "MUM",
         @Query("radius") radius: Int? = 500,
@@ -33,7 +32,10 @@ interface RetrofitService {
         fun getInstance(): RetrofitService {
             if (retrofitService == null) {
                 val client = OkHttpClient.Builder().addInterceptor { chain ->
-                    val newRequest = chain.request().newBuilder().addHeader("Authorization", "Bearer $API_KEY").build()
+                    val newRequest = chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer $API_KEY")
+                        .addHeader("Content-Type", "application/json")
+                        .build()
                     chain.proceed(newRequest)
                 }.build()
                 val retrofit = Retrofit.Builder().baseUrl("https://api.yelp.com").addConverterFactory(GsonConverterFactory.create()).client(client).build()

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.skycore.databinding.AdapterRestaurantBinding
 import com.example.skycore.pojo.Restaurant
+import kotlin.math.roundToInt
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
@@ -27,10 +28,12 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val movie = restaurants[position]
-        holder.binding.name.text = movie.name
-        Glide.with(holder.itemView.context).load(movie.image_url).into(holder.binding.imageview)
-
+        val restaurant = restaurants[position]
+        holder.binding.name.text = restaurant.name
+        holder.binding.address.text = "${restaurant.distance.roundToInt()}m, ${(restaurant.location as Map<*, *>)["address1"]}"
+        holder.binding.open.text = if (restaurant.isClosed) "Currently CLOSED" else "Currently OPEN"
+        holder.binding.rating.text = restaurant.rating.toString()
+        Glide.with(holder.itemView.context).load(restaurant.imageUrl).into(holder.binding.imageview)
     }
 
     override fun getItemCount(): Int {
