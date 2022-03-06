@@ -1,1 +1,1 @@
-# Skycore
+Thanks for the assignment. Due to lack of time as I am very much occupied with the current office work on weekends as well, I have done the project as much as I could, i.e. except the lazy list loading with the slider. The implementation is pretty straight forward where, the slider change would be updated into the view model data and pulling to refresh would trigger the reloading of the data.
